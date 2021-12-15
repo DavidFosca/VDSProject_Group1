@@ -209,7 +209,7 @@ BDD_ID Manager::or2(BDD_ID a, BDD_ID b){
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b){
 
-    return 0;
+    return ite(a,b,0);
 
 }
 
