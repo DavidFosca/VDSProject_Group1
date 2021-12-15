@@ -232,6 +232,18 @@ TEST_F(ORGate,ORGateTest){
     EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
     EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
     EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+}
+
+TEST_F(ANDGate,ANDGateTest){
+
+    managerTest.and2(managerTest.unique_table[4].id, managerTest.unique_table[5].id);
+
+    EXPECT_EQ(7,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(5,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
 };
 
 int main(int argc, char* argv[])
