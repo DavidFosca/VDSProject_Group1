@@ -81,5 +81,13 @@ public:
     }
 };
 
+class NegGate : public testing::Test {
+public:
+    Manager managerTest;
+
+    void SetUp() override{
+        managerTest.createVar("a");
+    }
+};
 
 #endif

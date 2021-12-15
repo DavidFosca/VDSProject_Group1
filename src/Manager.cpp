@@ -194,3 +194,10 @@ BDD_ID Manager::checkExistance(BDD_ID highSuccessor,BDD_ID lowSuccessor,BDD_ID t
     }
     return 0 ;
 }
+
+BDD_ID Manager::neg(BDD_ID a){
+
+    return a;
+
+}
+

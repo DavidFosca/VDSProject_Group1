@@ -201,9 +201,6 @@ TEST_F(IteTest,ITETest){
     EXPECT_EQ(7,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
     EXPECT_EQ(8,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
     EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
-
-
-
 }
 
 TEST_F(IteTest,checkExistanceTest){
@@ -212,6 +209,12 @@ TEST_F(IteTest,checkExistanceTest){
     EXPECT_EQ(0,managerTest.checkExistance(1,3,2));
 }
 
+TEST_F(NegGate,NegGateTest){
+
+    ASSERT_EQ(1,managerTest.neg(0));
+    ASSERT_EQ(0,managerTest.neg(1));
+
+}
 
 int main(int argc, char* argv[])
 {
