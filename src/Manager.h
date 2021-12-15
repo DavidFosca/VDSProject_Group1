@@ -84,7 +84,9 @@ namespace ClassProject {
 
         BDD_ID iteAssist(BDD_ID i, BDD_ID t, BDD_ID e);
 
-        BDD_ID neg(BDD_ID a);
+        BDD_ID neg(BDD_ID a) override;
+
+        BDD_ID or2(BDD_ID a, BDD_ID b) override;
 
         /**
          *   AddNode.

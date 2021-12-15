@@ -90,4 +90,14 @@ public:
     }
 };
 
+class ORGate : public testing::Test {
+public:
+    Manager managerTest;
+
+    void SetUp() override{
+        managerTest.createVar("a");
+        managerTest.createVar("b");
+    }
+};
+
 #endif

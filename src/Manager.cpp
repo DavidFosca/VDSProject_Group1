@@ -201,3 +201,9 @@ BDD_ID Manager::neg(BDD_ID a){
 
 }
 
+BDD_ID Manager::or2(BDD_ID a, BDD_ID b){
+
+    return 0;
+
+}
+
