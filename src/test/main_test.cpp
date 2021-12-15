@@ -211,8 +211,14 @@ TEST_F(IteTest,checkExistanceTest){
 
 TEST_F(NegGate,NegGateTest){
 
-    ASSERT_EQ(1,managerTest.neg(0));
-    ASSERT_EQ(0,managerTest.neg(1));
+    managerTest.neg(managerTest.unique_table[2].id);
+
+    EXPECT_EQ(4,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
 
 }
 
