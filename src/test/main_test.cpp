@@ -226,7 +226,7 @@ TEST_F(ORGate,ORGateTest){
 
     managerTest.or2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
 
-    EXPECT_EQ(6,managerTest.uniqueTableSize());
+    EXPECT_EQ(5,managerTest.uniqueTableSize());
 
     //check that the node of the gate was created correctly.
     EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
