@@ -296,7 +296,6 @@ TEST_F(NANDGate_Node,NANDGateTest){
 
 }
 
-
 TEST_F(XORGate,XORGateTest){
 
     managerTest.xor2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
@@ -320,9 +319,34 @@ TEST_F(XORGate_Node,XORGateTest){
     EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
     EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
 
+};
+
+TEST_F(XNORGate,XNORGateTest){
+
+    managerTest.xnor2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(6,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
     managerTest.printUniqueTable();
 }
 
+TEST_F(XNORGate_Node,XNORGateTest){
+
+    managerTest.xnor2(managerTest.unique_table[6].id, managerTest.unique_table[7].id);
+
+    EXPECT_EQ(12,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(7,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+}
 
 int main(int argc, char* argv[])
 {

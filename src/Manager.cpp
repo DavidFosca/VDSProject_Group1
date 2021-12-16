@@ -230,3 +230,9 @@ BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
     return ite(a, neg(b), b);
 
 }
+
+BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
+
+    return 0;
+
+}
