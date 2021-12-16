@@ -225,4 +225,8 @@ BDD_ID Manager::nand2(BDD_ID a, BDD_ID b){
 
 }
 
+BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
 
+    return 0;
+
+}
