@@ -90,6 +90,8 @@ namespace ClassProject {
 
         BDD_ID and2(BDD_ID a, BDD_ID b) override;
 
+        BDD_ID nor2(BDD_ID a, BDD_ID b) override;
+
         /**
          *   AddNode.
          *  add a node to our table with a given id, true node, false node,topVariable, label
