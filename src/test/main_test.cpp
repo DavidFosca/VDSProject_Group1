@@ -269,6 +269,31 @@ TEST_F(NORGate_Node,NORGateTest){
     EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
     EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
 
+};
+
+TEST_F(NANDGate,NANDGateTest){
+
+    managerTest.nand2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(5,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+}
+
+TEST_F(NANDGate_Node,NANDGateTest){
+
+    managerTest.nand2(managerTest.unique_table[6].id, managerTest.unique_table[7].id);
+
+    EXPECT_EQ(12,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
     managerTest.printUniqueTable();
 }
 
