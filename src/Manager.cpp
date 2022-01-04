@@ -149,7 +149,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
                                   coFactorFalse(e,unique_table[i].topvar));
 
 
-    if(highSuccessor==lowSuccessor){//check if it is the true node
+    if(highSuccessor==lowSuccessor){
         return highSuccessor;
     }
 
@@ -174,14 +174,11 @@ BDD_ID Manager::iteAssist(BDD_ID i, BDD_ID t, BDD_ID e){
             return e;  //if it is a terminal case return the id
         }
         else{
-            if(t==0 and e==0)
-                return 0;
+            if(t==e)
+                return t;
 
             else{
-                if(t==1 and e==1)
-                    return 1;
-                else
-                    return ite(i,t,e); //if it is not a terminal case start our recursion method
+                return ite(i,t,e); //if it is not a terminal case start our recursion method
             }
         }
     }
