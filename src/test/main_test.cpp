@@ -201,9 +201,6 @@ TEST_F(IteTest,ITETest){
     EXPECT_EQ(7,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
     EXPECT_EQ(8,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
     EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
-
-
-
 }
 
 TEST_F(IteTest,checkExistanceTest){
@@ -212,6 +209,144 @@ TEST_F(IteTest,checkExistanceTest){
     EXPECT_EQ(0,managerTest.checkExistance(1,3,2));
 }
 
+TEST_F(NegGate,NegGateTest){
+
+    managerTest.neg(managerTest.unique_table[2].id);
+
+    EXPECT_EQ(4,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+}
+
+TEST_F(ORGate,ORGateTest){
+
+    managerTest.or2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(5,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+}
+
+TEST_F(ANDGate,ANDGateTest){
+
+    managerTest.and2(managerTest.unique_table[4].id, managerTest.unique_table[5].id);
+
+    EXPECT_EQ(7,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(5,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+};
+
+TEST_F(NORGate,NORGateTest){
+
+    managerTest.nor2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(6,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+}
+
+TEST_F(NORGate_Node,NORGateTest){
+
+    managerTest.nor2(managerTest.unique_table[6].id, managerTest.unique_table[7].id);
+
+    EXPECT_EQ(12,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(0,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+};
+
+TEST_F(NANDGate,NANDGateTest){
+
+    managerTest.nand2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(6,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+}
+
+TEST_F(NANDGate_Node,NANDGateTest){
+
+    managerTest.nand2(managerTest.unique_table[6].id, managerTest.unique_table[7].id);
+
+    EXPECT_EQ(12,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(9,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+}
+
+TEST_F(XORGate,XORGateTest){
+
+    managerTest.xor2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(6,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+}
+
+TEST_F(XORGate_Node,XORGateTest){
+
+    managerTest.xor2(managerTest.unique_table[6].id, managerTest.unique_table[7].id);
+
+    EXPECT_EQ(12,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(9,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+};
+
+TEST_F(XNORGate,XNORGateTest){
+
+    managerTest.xnor2(managerTest.unique_table[2].id, managerTest.unique_table[3].id);
+
+    EXPECT_EQ(6,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(4,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+    managerTest.printUniqueTable();
+}
+
+TEST_F(XNORGate_Node,XNORGateTest){
+
+    managerTest.xnor2(managerTest.unique_table[6].id, managerTest.unique_table[7].id);
+
+    EXPECT_EQ(12,managerTest.uniqueTableSize());
+
+    //check that the node of the gate was created correctly.
+    EXPECT_EQ(7,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
+    EXPECT_EQ(10,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
+    EXPECT_EQ(2,managerTest.unique_table[managerTest.uniqueTableSize()-1].topvar);
+
+}
 
 int main(int argc, char* argv[])
 {
