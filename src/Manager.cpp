@@ -110,6 +110,7 @@ BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x){
     if( topVar(f) == x )
         return unique_table[f].high;
     else{ //if topVar(f) < x, then f may depend on x, hence the need of recursion
+        std::cout << "coFactorTrue recursion" << std::endl;
         T = coFactorTrue( unique_table[f].high, x );
         F = coFactorTrue( unique_table[f].low, x );
         return ite( topVar(f), T, F );
@@ -126,6 +127,7 @@ BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x) {
     if( topVar(f) == x )
         return unique_table[f].low;
     else{ //if topVar(f) < x, then f may depend on x, hence the need of recursion
+        std::cout << "coFactorFalse recursion" << std::endl;
         T = coFactorFalse( unique_table[f].high, x );
         F = coFactorFalse( unique_table[f].low, x );
         return ite( topVar(f), T, F );
@@ -141,29 +143,53 @@ BDD_ID Manager::coFactorFalse(BDD_ID f){
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
+    std::cout << "Entered ITE: i = " << i << " t = " << t << " e = " << e << std::endl;
 
-    BDD_ID  highSuccessor=iteAssist(coFactorTrue(i), coFactorTrue(t,unique_table[i].topvar),
-                                    coFactorTrue(e,unique_table[i].topvar));
-
-    BDD_ID lowSuccessor=iteAssist(coFactorFalse(i), coFactorFalse(t,unique_table[i].topvar),
-                                  coFactorFalse(e,unique_table[i].topvar));
-
-
-    if(highSuccessor==1 and lowSuccessor==1){//check if it is the true node
-        return 1;
+    if(i==1){
+        return t; //if it is a terminal case return the id
     }
-    if(highSuccessor==0 and lowSuccessor==0){ //check if it is a false node
-        return 0;
+    else if(i==0){
+        return e; //if it is a terminal case return the id
     }
-    BDD_ID exist=checkExistance(highSuccessor,lowSuccessor,unique_table[i].topvar);
+    else if(t == e){
+        return t;
+    }
+    else if(t==1 && e==0){
+        return i;
+    }
+    else {
+        BDD_ID a, b, c;
+        a = coFactorTrue(i);
+        b = coFactorTrue(t, unique_table[i].topvar);
+        c = coFactorTrue(e, unique_table[i].topvar);
+        std::cout << "coFactorTrue(i): " << a << " coFactorTrue(t,unique_table[i].topvar): " << b
+                  << " coFactorTrue(e,unique_table[i].topvar): " << c << std::endl;
 
-    if(exist==0){ //check if there is another node with the same top_var high Low
-        std::string x ="newNode";
-        addNode(uniqueTableSize(), highSuccessor, lowSuccessor, unique_table[i].topvar, (std::string &) x);
-        return uniqueTableSize()-1;
+        BDD_ID highSuccessor = ite(a, b, c);
+
+        a = coFactorFalse(i);
+        b = coFactorFalse(t, unique_table[i].topvar);
+        c = coFactorFalse(e, unique_table[i].topvar);
+        std::cout << "coFactorFalse(i): " << a << " coFactorFalse(t,unique_table[i].topvar): " << b
+                  << " coFactorFalse(e,unique_table[i].topvar): " << c << std::endl;
+
+        BDD_ID lowSuccessor = ite(a, b, c);
+
+        std::cout << "highSuccessor: " << highSuccessor << " lowSuccessor: " << lowSuccessor << std::endl;
+
+        if (highSuccessor == lowSuccessor) {//check if it is the true node
+            return highSuccessor;
+        }
+
+        BDD_ID exist = checkExistance(highSuccessor, lowSuccessor, unique_table[i].topvar);
+
+        if (exist == 0) { //check if there is another node with the same top_var high Low
+            std::string x = "newNode";
+            addNode(uniqueTableSize(), highSuccessor, lowSuccessor, unique_table[i].topvar, (std::string &) x);
+            return uniqueTableSize() - 1;
+        } else
+            return exist;
     }
-    else
-        return exist;
 }
 
 BDD_ID Manager::iteAssist(BDD_ID i, BDD_ID t, BDD_ID e){
@@ -176,7 +202,12 @@ BDD_ID Manager::iteAssist(BDD_ID i, BDD_ID t, BDD_ID e){
             return e; //if it is a terminal case return the id
         }
         else{
-            return ite(i,t,e); //if it is not a terminal case start our recursion method
+            if(t==e)
+                return t;
+            else {
+                std::cout << "iteAssist recursion" << std::endl;
+                return ite(i, t, e); //if it is not a terminal case start our recursion method
+            }
         }
     }
 }

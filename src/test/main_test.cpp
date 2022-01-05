@@ -167,8 +167,23 @@ TEST_F(CoFactorsTest,CoFactorFalseTwoInputsSimple){
 }
 TEST_F(IteTest,ITETest){
 
+    //checking special cases
+    BDD_ID ite_id_result = managerTest.ite(0,0,0);
+    EXPECT_EQ(0,ite_id_result);
+    managerTest.printUniqueTable();
+    ite_id_result = managerTest.ite(4,3,3);
+    managerTest.printUniqueTable();
+    EXPECT_EQ(3,ite_id_result);
+    ite_id_result = managerTest.ite(3,4,4);
+    managerTest.printUniqueTable();
+    EXPECT_EQ(4,ite_id_result);
+    ite_id_result = managerTest.ite(1,2,3);
+    managerTest.printUniqueTable();
+    EXPECT_EQ(2,ite_id_result);
+
     //ite of (a+b)
-    BDD_ID ite_id_result = managerTest.ite(2,1,3);
+    ite_id_result = managerTest.ite(2,1,3);
+    managerTest.printUniqueTable();
 
     EXPECT_EQ(6,ite_id_result);
     EXPECT_EQ(7,managerTest.uniqueTableSize());
@@ -178,6 +193,7 @@ TEST_F(IteTest,ITETest){
 
     //ite of (c*d)
     ite_id_result =managerTest.ite(4,5,0);
+    managerTest.printUniqueTable();
 
     EXPECT_EQ(7,ite_id_result);
     EXPECT_EQ(8,managerTest.uniqueTableSize());
@@ -187,6 +203,7 @@ TEST_F(IteTest,ITETest){
 
     //ite of ((a+b)*(c*d))
     ite_id_result =managerTest.ite(6,7,0);
+    managerTest.printUniqueTable();
 
     EXPECT_EQ(10,managerTest.uniqueTableSize());
 
