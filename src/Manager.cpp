@@ -162,20 +162,37 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     }
     //not a terminal case, starts recursions with the ite + coFactors
     else{
-        BDD_ID highSuccessor = ite(coFactorTrue(i), coFactorTrue(t, unique_table[i].topvar),
-                                         coFactorTrue(e, unique_table[i].topvar));
 
-        BDD_ID lowSuccessor = ite(coFactorFalse(i), coFactorFalse(t, unique_table[i].topvar),
-                                        coFactorFalse(e, unique_table[i].topvar));
+        //this part to get the correct topVar
+        BDD_ID topVar;
+        BDD_ID topVar1=unique_table[i].topvar;
+        BDD_ID topVar2=unique_table[t].topvar;
+        BDD_ID topVar3=unique_table[e].topvar;
+
+
+        if(isVariable(topVar1) and (topVar1<topVar2 or isConstant(topVar2)) and (topVar1<topVar3 or isConstant(topVar3)))
+            topVar=topVar1;
+        else {
+            if(isVariable(topVar2) and (topVar2<topVar1 or isConstant(topVar1)) and (topVar2<topVar3 or isConstant(topVar3)))
+                topVar=topVar2;
+            else
+                topVar=topVar3;
+        }
+
+        BDD_ID highSuccessor = ite(coFactorTrue(i,topVar), coFactorTrue(t,topVar),
+                                         coFactorTrue(e, topVar));
+
+        BDD_ID lowSuccessor = ite(coFactorFalse(i,topVar), coFactorFalse(t,topVar),
+                                        coFactorFalse(e,topVar));
 
         if (highSuccessor == lowSuccessor){
             return highSuccessor;
         }
 
-        BDD_ID exist = checkExistance(highSuccessor, lowSuccessor, unique_table[i].topvar);
+        BDD_ID exist = checkExistance(highSuccessor, lowSuccessor, topVar);
         if (exist == 0) { //check if there is another node with the same top_var high Low
             std::string x = "newNode";
-            addNode(uniqueTableSize(), highSuccessor, lowSuccessor, unique_table[i].topvar, (std::string &) x);
+            addNode(uniqueTableSize(), highSuccessor, lowSuccessor, topVar, (std::string &) x);
             return uniqueTableSize() - 1;
         } else
             return exist;
