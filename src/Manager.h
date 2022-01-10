@@ -8,6 +8,7 @@
 #include "ManagerInterface.h"
 #include "BDD_node.h"
 #include <vector>
+#include <unordered_map>
 #include <stdio.h>
 #include <string.h>
 
@@ -17,7 +18,7 @@ namespace ClassProject {
 
     public:
         std::vector<BDD_node> unique_table;
-
+        std::unordered_map<std::string, BDD_ID> computed_table;
         /**
          *   Manager Constructor Definition.
          *   The unique table object is initialized with two default entries, False and True nodes.

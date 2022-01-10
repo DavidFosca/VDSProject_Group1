@@ -176,7 +176,8 @@ TEST_F(IteTest,ITETest){
     EXPECT_EQ(1,ite_id_result);
     ite_id_result = managerTest.ite(1,2,3);
     EXPECT_EQ(2,ite_id_result);
-
+    ite_id_result = managerTest.ite(2,2,1);
+    EXPECT_EQ(1,ite_id_result);
     //ite of (a+b)
     ite_id_result = managerTest.ite(3,1,2);
 

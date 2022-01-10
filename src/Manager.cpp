@@ -160,6 +160,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     else if( t == 1 && e == 0 ){
         return i;
     }
+
     //not a terminal case, starts recursions with the ite + coFactors
     else{
 
@@ -170,10 +171,10 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
         BDD_ID topVar3=unique_table[e].topvar;
 
 
-        if(isVariable(topVar1) and (topVar1<topVar2 or isConstant(topVar2)) and (topVar1<topVar3 or isConstant(topVar3)))
+        if(isVariable(topVar1) and (topVar1<=topVar2 or isConstant(topVar2)) and (topVar1<=topVar3 or isConstant(topVar3)))
             topVar=topVar1;
         else {
-            if(isVariable(topVar2) and (topVar2<topVar1 or isConstant(topVar1)) and (topVar2<topVar3 or isConstant(topVar3)))
+            if(isVariable(topVar2) and (topVar2<=topVar1 or isConstant(topVar1)) and (topVar2<=topVar3 or isConstant(topVar3)))
                 topVar=topVar2;
             else
                 topVar=topVar3;
