@@ -141,6 +141,8 @@ BDD_ID Manager::coFactorFalse(BDD_ID f){
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
+    std::pair<std::string, BDD_ID>& id_ptr;
+
     //The terminal cases were put before the recursion to avoid overheads
     //if the terminal cases are put after, the coFactors will be calculated
     //unnecessarily. So, the same result would be reached, but with more
@@ -159,6 +161,9 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     //terminal case
     else if( t == 1 && e == 0 ){
         return i;
+    }
+    else if( ite_in_computed_table(i, t, e, id_ptr) ){
+        return id_ptr.second;
     }
 
     //not a terminal case, starts recursions with the ite + coFactors
@@ -212,6 +217,34 @@ BDD_ID Manager::checkExistance(BDD_ID highSuccessor,BDD_ID lowSuccessor,BDD_ID t
         }
     }
     return 0 ;
+}
+
+bool Manager::ite_in_computed_table(BDD_ID i, BDD_ID t, BDD_ID e, BDD_ID* id_ptr) {
+
+    auto s_1 = std::to_string(i);
+    auto s_2 = std::to_string(t);
+    auto s_3 = std::to_string(i);
+    std::string ite_string = s_1 + s_2 + s_3;
+
+    //If the ite combination string is found in the hash table.
+    *id_ptr = computed_table.find(ite_string);
+    if(*id_ptr != computed_table.end()){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+void Manager::update_computed_table(BDD_ID i, BDD_ID t, BDD_ID e, BDD_ID r) {
+
+    auto s_1 = std::to_string(i);
+    auto s_2 = std::to_string(t);
+    auto s_3 = std::to_string(i);
+    std::string  ite_string = s_1 + s_2 + s_3;
+
+    computed_table.insert(make_pair(ite_string, r));
+
 }
 
 BDD_ID Manager::neg(BDD_ID a){

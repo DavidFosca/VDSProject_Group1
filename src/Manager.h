@@ -107,6 +107,10 @@ namespace ClassProject {
         void printUniqueTable( void );
 
         BDD_ID checkExistance(BDD_ID highSuccessor,BDD_ID lowSuccessor,BDD_ID topVariable_i);
+
+        bool ite_in_computed_table(BDD_ID i, BDD_ID t, BDD_ID e, * id_ptr);
+
+        void update_computed_table(BDD_ID i, BDD_ID t, BDD_ID e, BDD_ID r);
     };
 
 };
