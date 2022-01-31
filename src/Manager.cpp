@@ -4,17 +4,31 @@
 using namespace ClassProject;
 
 Manager::Manager(){
+
+    std::string s_1 = std::to_string(0);
+    std::string s_2 = std::to_string(1);
+    std::string false_string = s_1 +"_"+s_1+"_"+s_1;
+    std::string true_string = s_2 +"_"+s_2+"_"+s_2;
     std::string false_str = "False";
     std::string true_str = "True";
     BDD_node node1(0,0,0,0,false_str);
     BDD_node node2(1,1,1,1,true_str);
     unique_table.push_back(node1);
     unique_table.push_back(node2);
+    reverse_computed_table.insert({false_string,0});
+    reverse_computed_table.insert({true_string,1});
 }
 
 BDD_ID Manager::createVar(const std::string &label) {
+
     BDD_node new_var(uniqueTableSize(),1,0,uniqueTableSize(), (std::string&)label);
+    std::string s_4 = std::to_string(1);
+    std::string s_5 = std::to_string(0);
+    std::string s_6 = std::to_string(uniqueTableSize());
+    std::string Node_string = s_4 +"_"+s_5+"_"+s_6;
     unique_table.push_back(new_var);
+    reverse_computed_table.insert({Node_string,uniqueTableSize()-1});
+
     return new_var.id;
 }
 
@@ -141,10 +155,17 @@ BDD_ID Manager::coFactorFalse(BDD_ID f){
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
+    BDD_ID* id_ptr;
+    auto s_1 = std::to_string(i);
+    auto s_2 = std::to_string(t);
+    auto s_3 = std::to_string(e);
+    std::string ite_string = s_1 +"_"+s_2+"_"+s_3;
+
     //The terminal cases were put before the recursion to avoid overheads
     //if the terminal cases are put after, the coFactors will be calculated
     //unnecessarily. So, the same result would be reached, but with more
     //computations.
+    std::unordered_map<std::string,BDD_ID>::const_iterator got = computed_table.find (ite_string);
     if( i == 1 ){
         return t;
     }
@@ -159,6 +180,9 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     //terminal case
     else if( t == 1 && e == 0 ){
         return i;
+    }
+    else if(got != computed_table.end()){
+        return got->second;
     }
 
     //not a terminal case, starts recursions with the ite + coFactors
@@ -187,31 +211,36 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
                                         coFactorFalse(e,topVar));
 
         if (highSuccessor == lowSuccessor){
+            computed_table.insert({ite_string,highSuccessor});
             return highSuccessor;
         }
 
-        BDD_ID exist = checkExistance(highSuccessor, lowSuccessor, topVar);
+        std::string s_4 = std::to_string(highSuccessor);
+        std::string s_5 = std::to_string(lowSuccessor);
+        std::string s_6 = std::to_string(topVar);
+        std::string Node_string = s_4 +"_"+s_5+"_"+s_6;
+        BDD_ID exist = checkExistance(Node_string);
+
+
         if (exist == 0) { //check if there is another node with the same top_var high Low
             std::string x = "newNode";
             addNode(uniqueTableSize(), highSuccessor, lowSuccessor, topVar, (std::string &) x);
+            computed_table.insert({ite_string,uniqueTableSize()-1});
+            reverse_computed_table.insert({Node_string,uniqueTableSize()-1});
             return uniqueTableSize() - 1;
-        } else
-            return exist;
+        } else{
+            computed_table.insert({ite_string,exist});
+            return exist;}
     }
 }
 
-BDD_ID Manager::checkExistance(BDD_ID highSuccessor,BDD_ID lowSuccessor,BDD_ID topVariable_i) {
+BDD_ID Manager::checkExistance(std::string Node_string) {
 
-    for (BDD_ID i = 0; i < uniqueTableSize(); i++) {
-        if(unique_table[i].high==highSuccessor and unique_table[i].low==lowSuccessor
-           and unique_table[i].topvar==topVariable_i){
-            return i;
-        }
-        if(highSuccessor==1 and lowSuccessor==1){
-            return 1;
-        }
+    std::unordered_map<std::string,BDD_ID>::const_iterator got = reverse_computed_table.find (Node_string);
+    if(got!=reverse_computed_table.end()){
+        return got->second;
     }
-    return 0 ;
+    return  0;
 }
 
 BDD_ID Manager::neg(BDD_ID a){

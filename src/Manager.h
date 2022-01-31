@@ -19,6 +19,7 @@ namespace ClassProject {
     public:
         std::vector<BDD_node> unique_table;
         std::unordered_map<std::string, BDD_ID> computed_table;
+        std::unordered_map<std::string, BDD_ID> reverse_computed_table;
         /**
          *   Manager Constructor Definition.
          *   The unique table object is initialized with two default entries, False and True nodes.
@@ -106,7 +107,11 @@ namespace ClassProject {
 
         void printUniqueTable( void );
 
-        BDD_ID checkExistance(BDD_ID highSuccessor,BDD_ID lowSuccessor,BDD_ID topVariable_i);
+        BDD_ID checkExistance(std::string Node_string);
+
+        bool ite_in_computed_table(BDD_ID i, BDD_ID t, BDD_ID e, BDD_ID* id_ptr);
+
+        void update_computed_table(BDD_ID i, BDD_ID t, BDD_ID e, BDD_ID r);
     };
 
 };
