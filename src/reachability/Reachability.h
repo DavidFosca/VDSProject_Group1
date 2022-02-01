@@ -10,9 +10,27 @@
 
 namespace ClassProject {
 
-//    class Reachability : public ReachabilityInterface {
-//
-//    };
+    class Reachability : public ReachabilityInterface {
+
+    public:
+
+        Manager states_OBDD;
+        vector<BDD_ID> init_state;
+        vector<BDD_ID> trans_func;
+
+        Reachability();
+
+        explicit ReachabilityInterface(unsigned int stateSize) override;
+
+        virtual const std::vector<BDD_ID> &getStates() override;
+
+        virtual bool isReachable(const std::vector<bool> &stateVector) override;
+
+        virtual void setTransitionFunctions(const std::vector<BDD_ID> &transitionFunctions) override;
+
+        virtual void setInitState(const std::vector<bool> &stateVector) override;
+
+    };
 
 }
 #endif
