@@ -14,21 +14,32 @@ namespace ClassProject {
 
     public:
 
-        Manager states_OBDD;
-        vector<BDD_ID> init_state;
-        vector<BDD_ID> trans_func;
+        //Manager states_OBDD;
+        std::vector<BDD_ID> init_state;
+        std::vector<BDD_ID> state_bits;
+        std::vector<BDD_ID> next_state_bits;
+        std::vector<BDD_ID> trans_func;
+        BDD_ID c_s_func;
+        BDD_ID trans_relation;
+        BDD_ID reachability_root;
 
-        Reachability();
+        Reachability(unsigned int stateSize);
 
-        explicit ReachabilityInterface(unsigned int stateSize) override;
+        BDD_ID computeTransitionRelation();
 
-        virtual const std::vector<BDD_ID> &getStates() override;
+        BDD_ID computeCharacteristicFunction(std::vector<BDD_ID> states);
 
-        virtual bool isReachable(const std::vector<bool> &stateVector) override;
+        BDD_ID inputVar(const std::string &state_name);
 
-        virtual void setTransitionFunctions(const std::vector<BDD_ID> &transitionFunctions) override;
+        BDD_ID symbolicComputationReachableStates();
 
-        virtual void setInitState(const std::vector<bool> &stateVector) override;
+        const std::vector<BDD_ID> &getStates() const override;
+
+        bool isReachable(const std::vector<bool> &stateVector) override;
+
+        void setTransitionFunctions(const std::vector<BDD_ID> &transitionFunctions) override;
+
+        void setInitState(const std::vector<bool> &stateVector) override;
 
     };
 

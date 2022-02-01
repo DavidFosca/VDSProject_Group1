@@ -9,6 +9,26 @@
 #include <gtest/gtest.h>
 #include "Reachability.h"
 
+using namespace ClassProject;
 
+class ReachabilityConstructorTest : public testing::Test {
+public:
+
+    Reachability reachabilityTest = Reachability( 2 );
+
+};
+
+class IsReachable : public testing::Test {
+public:
+
+    Reachability reachabilityTest = Reachability( 2 );
+
+    std::vector<bool> stateVector;
+    std::vector<BDD_ID> transitionFunctions;
+    std::vector<bool> test1;
+    std::vector<bool> test2;
+    std::vector<bool> test3;
+    std::vector<bool> test4;
+};
 
 #endif
