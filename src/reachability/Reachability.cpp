@@ -32,6 +32,7 @@ Reachability::Reachability(unsigned int stateSize) : ReachabilityInterface(state
 
     trans_relation = computeTransitionRelation();
     c_s_func = computeCharacteristicFunction(init_state);
+    default_trans_func = 1;
 }
 
 BDD_ID Reachability::inputVar(const std::string &state_name){
@@ -83,8 +84,8 @@ BDD_ID Reachability::symbolicComputationReachableStates(){
         c_r_func = c_r_it_func;
 
         temp1 = and2(c_r_func, trans_relation);
-        for (int i = 0; i < state_bits.size(); i++) {
-            temp2 = or2(coFactorTrue(temp1, state_bits[i]), coFactorFalse(temp1, state_bits[i]));
+        for (unsigned long state_bit : state_bits) {
+            temp2 = or2(coFactorTrue(temp1, state_bit), coFactorFalse(temp1, state_bit));
             temp1 = temp2;
         }
         img_new = temp1;
@@ -116,6 +117,15 @@ bool Reachability:: isReachable(const std::vector<bool> &stateVector){
     std::vector<BDD_ID> stateVector_BDD;
     BDD_ID temp;
 
+    if ( stateVector.size() != state_bits.size() ){
+        throw std::runtime_error("Runtime_error: The size does not match with number of state bits!");
+    }
+
+    if(default_trans_func){
+        trans_relation = computeTransitionRelation();
+        reachability_root = symbolicComputationReachableStates();
+    }
+
     temp = reachability_root;
     for(int i=0; i<stateVector.size(); i++){
         if( stateVector[i] ) {
@@ -135,7 +145,7 @@ void Reachability::setTransitionFunctions(const std::vector<BDD_ID> &transitionF
     }
 
     for(int i=0; i<transitionFunctions.size(); i++){
-        if (transitionFunctions[i] > uniqueTableSize()-2) {
+        if (transitionFunctions[i] >= uniqueTableSize()) {
             throw std::runtime_error("Runtime_error: An unknown ID is provided!");
         }
     }
@@ -147,6 +157,8 @@ void Reachability::setTransitionFunctions(const std::vector<BDD_ID> &transitionF
     trans_relation = computeTransitionRelation();
 
     reachability_root = symbolicComputationReachableStates();
+
+    default_trans_func = 0;
 }
 
 void Reachability::setInitState(const std::vector<bool> &stateVector){

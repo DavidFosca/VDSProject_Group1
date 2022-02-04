@@ -18,7 +18,7 @@ public:
 
 };
 
-class IsReachable : public testing::Test {
+class IsReachable2Bits : public testing::Test {
 public:
 
     Reachability reachabilityTest = Reachability( 2 );
@@ -29,6 +29,23 @@ public:
     std::vector<bool> test2;
     std::vector<bool> test3;
     std::vector<bool> test4;
+};
+
+class IsReachable3Bits : public testing::Test {
+public:
+
+    Reachability reachabilityTest = Reachability( 3 );
+
+    std::vector<bool> stateVector;
+    std::vector<BDD_ID> transitionFunctions;
+    std::vector<bool> test1;
+    std::vector<bool> test2;
+    std::vector<bool> test3;
+    std::vector<bool> test4;
+    std::vector<bool> test5;
+    std::vector<bool> test6;
+    std::vector<bool> test7;
+    std::vector<bool> test8;
 };
 
 #endif
