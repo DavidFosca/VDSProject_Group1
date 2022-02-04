@@ -32,7 +32,7 @@ Reachability::Reachability(unsigned int stateSize) : ReachabilityInterface(state
 
     trans_relation = computeTransitionRelation();
     c_s_func = computeCharacteristicFunction(init_state);
-    default_trans_func = 1;
+    reachability_root = symbolicComputationReachableStates();
 }
 
 BDD_ID Reachability::inputVar(const std::string &state_name){
@@ -121,11 +121,6 @@ bool Reachability:: isReachable(const std::vector<bool> &stateVector){
         throw std::runtime_error("Runtime_error: The size does not match with number of state bits!");
     }
 
-    if(default_trans_func){
-        trans_relation = computeTransitionRelation();
-        reachability_root = symbolicComputationReachableStates();
-    }
-
     temp = reachability_root;
     for(int i=0; i<stateVector.size(); i++){
         if( stateVector[i] ) {
@@ -157,8 +152,6 @@ void Reachability::setTransitionFunctions(const std::vector<BDD_ID> &transitionF
     trans_relation = computeTransitionRelation();
 
     reachability_root = symbolicComputationReachableStates();
-
-    default_trans_func = 0;
 }
 
 void Reachability::setInitState(const std::vector<bool> &stateVector){
@@ -173,4 +166,5 @@ void Reachability::setInitState(const std::vector<bool> &stateVector){
             init_state[i] = 0;
         }
     }
+    c_s_func = computeCharacteristicFunction(init_state);
 }

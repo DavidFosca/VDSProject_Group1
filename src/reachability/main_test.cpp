@@ -9,7 +9,7 @@ TEST_F(ReachabilityConstructorTest, constructor_sizeok){
 
     BDD_ID table_size = reachabilityTest.unique_table.size();
     //reachabilityTest.printUniqueTable();
-    EXPECT_EQ(table_size, 20);
+    EXPECT_EQ(table_size, 24);
 }
 
 /// Reachability default_transition_function TESTS:
@@ -19,8 +19,6 @@ TEST_F(IsReachable2Bits, default_transition_function){
     stateVector.push_back(0);
     stateVector.push_back(0);
     //reachabilityTest.setInitState(stateVector);
-
-    reachabilityTest.printUniqueTable();
 
     test1.push_back(0);
     test1.push_back(0);
@@ -106,7 +104,7 @@ TEST_F(IsReachable3Bits, reachable_3bits){
     transitionFunctions.push_back(reachabilityTest.neg(states_bdd_id[1]));
     transitionFunctions.push_back(reachabilityTest.neg(states_bdd_id[2]));
 
-    //reachabilityTest.setTransitionFunctions(transitionFunctions);
+    reachabilityTest.setTransitionFunctions(transitionFunctions);
 
     test1.push_back(0);
     test1.push_back(0);
@@ -165,6 +163,35 @@ TEST_F(IsReachable3Bits, reachable_3bits){
     EXPECT_EQ(found, false);
 
     //reachabilityTest.printUniqueTable();
+}
+
+TEST_F(ReachabilityExceptions, testing_exceptions){
+    std::vector<BDD_ID> states_bdd_id;
+
+    EXPECT_THROW(Reachability( 0 ), std::runtime_error);
+
+    stateVector.push_back(0);
+    stateVector.push_back(0);
+
+    EXPECT_THROW(reachabilityTest.setInitState(stateVector), std::runtime_error);
+
+    states_bdd_id = reachabilityTest.getStates();
+
+    transitionFunctions.push_back(reachabilityTest.neg(states_bdd_id[0]));
+    transitionFunctions.push_back(reachabilityTest.neg(states_bdd_id[1]));
+
+    EXPECT_THROW(reachabilityTest.setTransitionFunctions(transitionFunctions), std::runtime_error);
+
+    transitionFunctions.push_back(1000);
+    transitionFunctions.push_back(1001);
+
+    EXPECT_THROW(reachabilityTest.setTransitionFunctions(transitionFunctions), std::runtime_error);
+
+    test1.push_back(0);
+    test1.push_back(0);
+    test1.push_back(0);
+
+    EXPECT_THROW(reachabilityTest.isReachable(test1), std::runtime_error);
 }
 
 int main(int argc, char* argv[])

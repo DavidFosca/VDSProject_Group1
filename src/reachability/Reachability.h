@@ -12,7 +12,8 @@ namespace ClassProject {
 
     class Reachability : public ReachabilityInterface {
 
-    private:
+    //private:
+    public:
         //Manager states_OBDD;
         std::vector<BDD_ID> init_state;
         std::vector<BDD_ID> state_bits;
@@ -21,7 +22,6 @@ namespace ClassProject {
         BDD_ID c_s_func;
         BDD_ID trans_relation;
         BDD_ID reachability_root;
-        bool default_trans_func;
 
         BDD_ID computeTransitionRelation();
 

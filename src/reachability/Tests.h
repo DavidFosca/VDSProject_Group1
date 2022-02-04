@@ -48,4 +48,13 @@ public:
     std::vector<bool> test8;
 };
 
+class ReachabilityExceptions : public testing::Test {
+public:
+    Reachability reachabilityTest = Reachability( 4 );
+
+    std::vector<bool> stateVector;
+    std::vector<BDD_ID> transitionFunctions;
+    std::vector<bool> test1;
+};
+
 #endif
