@@ -167,4 +167,5 @@ void Reachability::setInitState(const std::vector<bool> &stateVector){
         }
     }
     c_s_func = computeCharacteristicFunction(init_state);
+    reachability_root = symbolicComputationReachableStates();
 }
