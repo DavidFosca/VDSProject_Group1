@@ -176,11 +176,16 @@ TEST_F(IteTest,ITETest){
     EXPECT_EQ(1,ite_id_result);
     ite_id_result = managerTest.ite(1,2,3);
     EXPECT_EQ(2,ite_id_result);
+    ite_id_result = managerTest.ite(2,2,1);
+    EXPECT_EQ(1,ite_id_result);
+    ite_id_result = managerTest.ite(2,2,1);
+    EXPECT_EQ(1,ite_id_result);
 
     //ite of (a+b)
     ite_id_result = managerTest.ite(3,1,2);
-
+    ite_id_result = managerTest.ite(3,1,2);
     EXPECT_EQ(6,ite_id_result);
+
     EXPECT_EQ(7,managerTest.uniqueTableSize());
     EXPECT_EQ(1,managerTest.unique_table[managerTest.uniqueTableSize()-1].high);
     EXPECT_EQ(3,managerTest.unique_table[managerTest.uniqueTableSize()-1].low);
@@ -215,8 +220,8 @@ TEST_F(IteTest,ITETest){
 
 TEST_F(IteTest,checkExistanceTest){
 
-    EXPECT_EQ(2,managerTest.checkExistance(1,0,2));
-    EXPECT_EQ(0,managerTest.checkExistance(1,3,2));
+    EXPECT_EQ(2,managerTest.checkExistance("1_0_2"));
+    EXPECT_EQ(0,managerTest.checkExistance("1_3_2"));
 }
 
 TEST_F(NegGate,NegGateTest){

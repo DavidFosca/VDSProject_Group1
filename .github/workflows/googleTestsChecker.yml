@@ -20,6 +20,9 @@ jobs:
             cd /usr/src/gtest
             sudo cmake CMakeLists.txt
             sudo make
+        
+        - name: Install Boost
+          run: sudo apt-get update && sudo apt-get install libboost-all-dev
             
         - name: Create Build Environment
           run: cmake -E make_directory ${{runner.workspace}}/build
@@ -38,4 +41,14 @@ jobs:
           working-directory: ${{runner.workspace}}/build
           shell: bash
           run: ${{runner.workspace}}/build/src/test/VDSProject_test
+          
+        - name: Build VDSProject_reachability
+          working-directory: ${{runner.workspace}}/build
+          shell: bash
+          run: cmake --build . --config $BUILD_TYPE --target VDSProject_reachability
+          
+        - name: Run VDSProject_reachability
+          working-directory: ${{runner.workspace}}/build
+          shell: bash
+          run: ${{runner.workspace}}/build/src/reachability/VDSProject_reachability
     
